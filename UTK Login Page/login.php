@@ -22,8 +22,8 @@ if ($conn->connect_error) {
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve input directly from the form
-    $input_username = $_POST['username'];
-    $input_password = $_POST['password'];
+    $input_username = $_GET['username'];
+    $input_password = $_GET['password'];
 
     // Debug: Print inputs
     echo "Input Username: " . htmlspecialchars($input_username) . "<br>";
@@ -33,8 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //admin' OR '1'='1
     //admin'-- 
     //^^makesure there's a space at the end
-    $sql = "SELECT * FROM users WHERE username = '$input_username' AND password = '$input_password'";
-
+    //$sql = "SELECT * FROM users WHERE username = '$input_username' AND password = '$input_password'";
+    $sql = "INSERT INTO users (username, password) VALUES ('$input_username', '$input_password')";
     // Debug: Print the SQL query
     echo "SQL Query: " . $sql; // Display the SQL query
     //exit(); // Stop execution to see the SQL query
@@ -48,14 +48,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['username'] = $input_username;
             header("Location: dashboard.php"); // Redirect to dashboard
             exit();
-        } else {
+        } /*else {
             // Invalid credentials
             $message = "Invalid username or password.";
             header("Location: index.php?message=" . urlencode($message)); // Redirect back with message
             exit();
-        }
+        }*/
     } else {
-        die("SQL Error: " . $conn->error); // Handle query execution errors
+        //die("SQL Error: " . $conn->error); // Handle query execution errors
     }
 }
 
